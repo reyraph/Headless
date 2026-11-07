@@ -1,0 +1,24 @@
+services:
+  headless:
+    # `docker compose up` télécharge l'image publiée ; `--build` la reconstruit localement.
+    image: ghcr.io/reyraph/headless:latest
+    build: .
+    container_name: headless-wordpress
+    ports:
+      # 127.0.0.1 : le site et son mot de passe de cours restent invisibles depuis le réseau.
+      - "127.0.0.1:${WP_PORT:-8080}:80"
+    environment:
+      WP_URL: "http://localhost:${WP_PORT:-8080}"
+      WP_SITE_TITLE: "${WP_SITE_TITLE:-Headless WordPress}"
+      WP_ADMIN_USER: "${WP_ADMIN_USER:-admin}"
+      WP_ADMIN_PASSWORD: "${WP_ADMIN_PASSWORD:-headless-dev}"
+      WP_ADMIN_EMAIL: "${WP_ADMIN_EMAIL:-admin@example.com}"
+    volumes:
+      - db:/var/lib/mysql
+      - wp-content:/var/www/html/wp-content
+    # Laisse à MySQL le temps de s'arrêter proprement
+    stop_grace_period: 60s
+
+volumes:
+  db:
+  wp-content:

@@ -1,0 +1,8 @@
+.env
+node_modules/
+dist/
+*.wpress
+*.log
+.DS_Store
+Thumbs.db
+.claude/settings.local.json

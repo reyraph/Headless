@@ -1,0 +1,5 @@
+# Force LF : un script en CRLF ferait échouer le conteneur sous Linux
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.wpress binary
